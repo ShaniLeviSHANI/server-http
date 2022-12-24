@@ -35,13 +35,13 @@ const getAllTraineesProfile = asyncHandler(async (req, res, next) => {
       new ErrorResponse(`Cannot get friend becuse you are trainee`, 400)
     );
   }
-  const profile = await Profile.findById(req.user.profile_id).populate('meetings ended_meetings', 'date title activities urlRoom')
+  const profile = await Profile.findById(req.user.profile_id) // .populate('meetings ended_meetings', 'date title activities urlRoom')
   let t = [];
   if (profile.trainerOf?.length != 0) {
     for (const i of profile.trainerOf) {
       let trainee_user = await User.findById(i);
       if (trainee_user?.profile_id) {
-        const trainee_profile = await Profile.findById(trainee_user.profile_id).populate('meetings ended_meetings', 'date title activities urlRoom')
+        const trainee_profile = await Profile.findById(trainee_user.profile_id) // .populate('meetings ended_meetings', 'date title activities urlRoom')
         t.push({ user: trainee_user, profile: trainee_profile })
       }
     }
